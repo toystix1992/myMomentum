@@ -1,73 +1,96 @@
 //DOM elements
 
-const time = document.getElementById('time');
+const clock = document.getElementById('time');
 const greeting = document.getElementById('greeting');
 const name = document.getElementById('name');
 const focus = document.getElementById('focus');
-const toDate = document.getElementById('toDate');
+const todayDate = document.getElementById('toDate');
+const bgButton = document.getElementById('bgButton');
 
 // Function to show time
-let showTime = () => {
-    let today = new Date();
-    let hour = today.getHours();
-    let minute = today.getMinutes();
-    let second = today.getSeconds();
+const showTime = () => {
+  const today = new Date();
+  const hour = today.getHours();
+  const minute = today.getMinutes();
+  const second = today.getSeconds();
 
-
-    time.innerHTML = `${hour} <span>:</span>${addZero(minute)}<span>:</span>${addZero(second)}`;
+  clock.textContent = `${hour} : ${addZero(minute)} : ${addZero(second)}`;
 
     setTimeout(showTime, 1000);
+    //requestAnimationFrame
 }
 
 //add zero
-let addZero = (n) => {
-    return (parseInt(n,10) < 10 ? "0" : "") + n;
-}
+const addZero = (n) => (parseInt(n,10) < 10 ? "0" : "") + n;
+
 
 // Function to show date
-let showDate = () => {
-    let today = new Date();
-    let date = today.getDate();
-    let day = today.getDay();
-    let month = today.getMonth();
+const showDate = () => {
+  const today = new Date();
+  const date = today.getDate();
+  const day = today.getDay();
+  const month = today.getMonth();
 
     let week = ["Воскресенье", "Понедельник", "Вторник", "Среда","Четверг","Пятница","Суббота"];
     dayOfWeek = week[day];
 
     let year = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"]
     monthOfYear = year[month];
-    toDate.innerHTML =`${dayOfWeek}<span>,</span>   ${date}  ${monthOfYear}`;
+    todayDate.textContent =`${dayOfWeek},  ${date}  ${monthOfYear}`;
 }
 
 //set BG & greeting
 
 let setBgGr = () => {
-    let today = new Date(),
-    hour = today.getHours();
-    //minute = today.getMinutes();
-    let imgStore = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"];
-    for (let i = 0; i < imgStore.length; i++) {
-      const element = imgStore[i];
+    const today = new Date();
+    const hour = today.getHours();
+    const morning = hour > 6 && hour < 12;
+    const afternoon = hour > 12 && hour < 18;
+    const evening = hour > 18 && hour < 24;
+    const imgStore = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"];
+    let i = 0;
+
+    //change BG on click
+    let changeOnClick = () => i < 6 ? i++ : i = 0;
+    bgButton.addEventListener("click", changeOnClick);
+
+    //change BG every hour
+    if(hour == 0 || hour == 6 || hour == 12 || hour == 18) {
+      i = 0;
+    } else if (hour == 1 || hour == 7 || hour == 13 || hour == 19) {
+      i = 1;
+    } else if (hour == 2 || hour == 8 || hour == 14 || hour == 20) {
+      i = 2;
+    } else if (hour == 3 || hour == 9 || hour == 15 || hour == 21) {
+      i = 3;
+    } else if (hour == 4 || hour == 10 || hour == 16 || hour == 22) {
+      i = 4;
+    } else if (hour == 5 || hour == 11 || hour == 17 || hour == 23) {
+      i = 5;
     }
 
-        if(hour < 12 && hour >04) {
-        //morning
-        setTi
-        let way = `'/assets/img/morning/${imgStore[i]}'`;
-        document.getElementById('bg').style.backgroundImage = "url("+way+")";
-        greeting.textContent = 'Доброе утречко, ';
-      } else if (hour < 18 && hour < 23) {
-        // Afternoon
-        let way = `'/assets/img/afternoon/${imgStore[2]}'`;
-        document.getElementById('bg').style.backgroundImage = "url("+way+")";
-        greeting.textContent = 'Добрый денечек, ';
-      } else {
-        // Evening
-        let way = `'/assets/img/evening/${imgStore[i]}'`;
-        document.getElementById('bg').style.backgroundImage = "url("+way+")";
-        greeting.textContent = 'Добрейший вечерочек, ';
-        document.body.style.color = 'white';
-}
+    if(morning) {
+    //morning
+    let wayToImg = `/assets/img/morning/${imgStore[i]}`;
+    document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
+    greeting.textContent = 'Доброе утречко, ';
+  } else if (afternoon) {
+    // Afternoon
+    let wayToImg = `/assets/img/afternoon/${imgStore[i]}`;
+    document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
+    greeting.textContent = 'Добрый денечек, ';
+  } else if (evening){
+    // Evening
+    let wayToImg = `/assets/img/evening/${imgStore[i]}`;
+    document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
+    greeting.textContent = 'Добрейший вечерочек, ';
+    document.body.style.color = 'white';
+  } else {
+    let wayToImg = `/assets/img/night/${imgStore[i]}`;
+    document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
+    greeting.textContent = 'Доброй ночки, ';
+    document.body.style.color = 'white';
+  }
 }
 
 // Get name
@@ -118,6 +141,7 @@ name.addEventListener('keypress',setName);
 name.addEventListener('blur',setName);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
+
 
 //run function
 showTime();
