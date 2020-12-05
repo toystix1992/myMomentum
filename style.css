@@ -56,7 +56,7 @@ time, mark, audio, video {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(23, 64, 80, 0.37);;
+    background-color: rgba(23, 64, 80, 0.37);
   }
 
   .radio {
@@ -89,6 +89,27 @@ time, mark, audio, video {
     margin-bottom: 0.5rem;
     opacity: 0.9;
   }
+
+  .radioWrapper {
+    margin: 0 3rem;
+  }
+
+  .weatherWrapper {
+    margin:2rem 4rem;
+    padding:15px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    background-color: rgba(30, 32, 32, 0.3);;
+  }
+
+  /*.temperature {
+    font-size: 1.9rem;
+  }
+
+  .weather-description {
+    font-size: 1.4rem;
+  }*/
+
 
   .btn {
     width: 60px;
