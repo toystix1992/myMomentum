@@ -51,46 +51,57 @@ let setBgGr = () => {
     const morning = hour > 6 && hour < 12;
     const afternoon = hour > 12 && hour < 18;
     const evening = hour > 18 && hour < 24;
-    const imgStore = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"];
-    let i = 0;
-
-    //change BG on click
-    let changeOnClick = () => i < 6 ? i++ : i = 0;
-    bgButton.addEventListener("click", changeOnClick);
+    const imgStore = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg"];
+    let rigtImg = '';
 
     //change BG every hour
+
     if(hour == 0 || hour == 6 || hour == 12 || hour == 18) {
-      i = 0;
+      rigtImg = imgStore[0];
     } else if (hour == 1 || hour == 7 || hour == 13 || hour == 19) {
-      i = 1;
+      rigtImg = imgStore[1];
     } else if (hour == 2 || hour == 8 || hour == 14 || hour == 20) {
-      i = 2;
+      rigtImg = imgStore[2];
     } else if (hour == 3 || hour == 9 || hour == 15 || hour == 21) {
-      i = 3;
+      rigtImg = imgStore[3];
     } else if (hour == 4 || hour == 10 || hour == 16 || hour == 22) {
-      i = 4;
+      rigtImg = imgStore[4];
     } else if (hour == 5 || hour == 11 || hour == 17 || hour == 23) {
-      i = 5;
+      rigtImg = imgStore[5];
     }
+
+
 
     if(morning) {
     //morning
-    let wayToImg = `/assets/img/morning/${imgStore[i]}`;
+
+    let wayToImg = `./assets/img/morning/${rigtImg}`;
     document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
     greeting.textContent = 'Доброе утречко, ';
   } else if (afternoon) {
     // Afternoon
-    let wayToImg = `/assets/img/afternoon/${imgStore[i]}`;
+      let changeOnClick = () => {
+        imgStore[i++];
+      rigtImg = imgStore[i];
+      return console.log(rigtImg);
+    }
+
+  bgButton.addEventListener('click',changeOnClick);
+
+    let wayToImg = `./assets/img/afternoon/${rigtImg}`;
     document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
     greeting.textContent = 'Добрый денечек, ';
   } else if (evening){
     // Evening
-    let wayToImg = `/assets/img/evening/${imgStore[i]}`;
+
+    let wayToImg = `./assets/img/evening/${rigtImg}`;
     document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
     greeting.textContent = 'Добрейший вечерочек, ';
     document.body.style.color = 'white';
   } else {
-    let wayToImg = `/assets/img/night/${imgStore[i]}`;
+    //night & onclick
+
+    let wayToImg = `./assets/img/night/${rigtImg}`;
     document.getElementById('bg').style.backgroundImage = `url("${wayToImg}")`;
     greeting.textContent = 'Доброй ночки, ';
     document.body.style.color = 'white';
